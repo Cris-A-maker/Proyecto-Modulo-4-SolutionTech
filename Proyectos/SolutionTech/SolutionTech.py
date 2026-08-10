@@ -156,6 +156,16 @@ class Mostrar:  # comando para el boton de mostrar clientes
         ventana_lista = tk.Toplevel(ventana)
         ventana_lista.title("Listado de Clientes")
         ventana_lista.geometry("600x400")
+        
+        def __str__(self):
+            return(
+            f"Nombre: {self.nombre}\n"
+            f"RUT: {self.rut}\n"
+            f"Telefono: {self.telefono}\n"
+            f"Direccion: {self.direccion}\n"
+            f"Correo: {self.correo}\n"
+            f"Tipo: {Tipo(self.tipo).mostrar_tipo()}\n"
+            )
 
         texto = scrolledtext.ScrolledText(ventana_lista, width=70, height=20)
         texto.pack(padx=10, pady=10, fill="both", expand=True)
