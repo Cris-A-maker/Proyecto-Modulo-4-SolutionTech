@@ -37,6 +37,8 @@ class registro: #comando para el boton de registro de clientes
             archivo.write(f"\n{numero}{self.nombre},{self.rut},{self.telefono},{self.direccion},{self.correo},{self.tipo}\n")
 
 
+
+
 import tkinter as tk #preparando la ventana tk
 ventana = tk.Tk()
 ventana.config(width=800, height=600)
@@ -88,7 +90,7 @@ entri_tipo = tk.Entry()
 entri_tipo.place(x=170, y=170)
 entri_tipo.config(width=5)
 
-class ValueError(Exception): #excepcion para el ingreso de numeros en rut y telefono
+class ValueError(Exception): #excepcion para el ingreso de numeros en rut y telefono/@ en correo
     try: 
         entri_rut.get().isdigit()
         entri_telefono.get().isdigit()
@@ -100,12 +102,36 @@ class ValueError(Exception): #excepcion para el ingreso de numeros en rut y tele
     except ValueError as e:
         print(e)
 
+    try:
+        entri_correo.get()
+    except ValueError:
+        if "@" not in entri_correo.get():
+            raise ValueError("Ingrese un Correo valido")
+    except ValueError as e:
+        print(e)
+
+
+
+
+
+class buscar: #comando para el boton de buscar clientes
+    def buscar_cliente():
+        rut_buscar = entri_rut.get()
+        with open("Clientes.txt", "r") as archivo:
+            for linea in archivo:
+                if rut_buscar in linea:
+                    print(linea)
+                    break
+            else:
+                print("Cliente no encontrado")
+
 
 class Mostrar: #comando para el boton de mostrar clientes
     def mostrar_clientes():
         with open("Clientes.txt", "r") as archivo:
             contenido = archivo.read()
             print(contenido)
+
 
 
 btn_registrar = tk.Button(text="Registrar Cliente", command=registro().registrar_cliente)
@@ -115,6 +141,11 @@ btn_mostrar = tk.Button(text="Mostrar Clientes", command=lambda: Mostrar.mostrar
 btn_mostrar.place(x=150, y=250)
 
 
+btn_editar = tk.Button(text="Editar Cliente", command=lambda: buscar.buscar_cliente())
+btn_editar.place(x=300, y=250)
+
+btn_eliminar = tk.Button(text="Eliminar Cliente", command=lambda: print("Función de eliminar cliente no implementada"))
+btn_eliminar.place(x=450, y=250)
 
 
 ventana.mainloop()
